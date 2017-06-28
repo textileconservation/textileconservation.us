@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="sg@textileconservation.us">
+    <meta name="description" content="textile conservation and restoration services">
+    <meta name="msvalidate.01" content="471862C32C110D8709D0C4EBD5E18D18" />
+    <title>textileconservation.us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="dist/milligram.min.css">
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+    <body>
+      <main class="wrapper">
+      <nav class="navigation">
+      <section class="container">
+      <ul class="navigation-list float-left">
+	<li class="navigation-item" style="margin: 0;">
+	  <a class="navigation-title" href="/">
+	    <h1 class="title">textileconservation.us</h1>
+	  </a>
+	</li>
+	<li class="navigation-item">
+	  <a class="navigation-link" href="#popover-grid" data-popover>
+	    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="12px" height="6px" viewBox="0 0 12 6" enable-background="new 0 0 12 6" xml:space="preserve">
+	      <polygon points="11.992,0 5.992,6 -0.008,0" style="fill:#9B4DCA;"/>
+	    </svg>
+	  </a>
+	  <div class="popover" id="popover-grid">
+	    <ul class="popover-list" style="left: 0; left:auto;">
+	      <li class="popover-item">
+		<a class="popover-link" href="/services" title="services">services</a>
+	      </li>
+	      <li class="popover-item">
+		<a class="popover-link" href="/contact" title="contact">contact</a>
+	      </li>
+	    </ul>
+	  </div>
+	</li>
+      </ul>
+      </section>
+    </nav>
+      <section class="container" id="page content">
+	
+	<% content %>
+
+      </section>
+      <footer class="footer">
+        <section class="container">
+          <a class="mail link" href="mailto:sg@textileconservation.us">sg@textileconservation.us</a>
+        </section>
+      </footer>
+    </main>
+    <script src="scripts/main.js"></script>
+    </body>
+</html>

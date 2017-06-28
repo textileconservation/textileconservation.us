@@ -1,0 +1,18 @@
+<h5 class="title">contacting the studio:</h5>
+<p>Please contact the studio by email. You may use either the form on this page or the link that appears at the bottom of each page of the site.</p>
+<p>If this is an initial inquiry concerning a textile, include some information on the textile's history and environment if you can. If possible, attach photographs of the item and any areas of concern.</p>
+<p>The studio will reply with suggestions appropriate to your situation. Most often, this will lead to a detailed examination of the item that produces a written treatment plan.</p>
+
+<form id="contactForm" method="POST" enctype="multipart/form-data">
+  <fieldset>
+    <input placeholder="name" name="name" type="text" required>
+    <input placeholder="email" name="email" type="email" required>
+    <textarea placeholder="body of message…" name="body" required></textarea>
+    <input id="fileupload" type="file" name="files" multiple>
+    <input class="button-primary" value="Send" type="submit">
+  </fieldset>
+</form>
+
+<script>
+$("#contactForm").validate();
+</script>
