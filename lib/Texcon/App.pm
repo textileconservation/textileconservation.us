@@ -33,6 +33,7 @@ post '/contact' => sub {
   my @errors;
   my %filenames;
 
+#check address against list of disposable email providers
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
   foreach (@disposables) { $disposable = 1 if $emaildomain eq $_ };
@@ -48,6 +49,7 @@ post '/contact' => sub {
     return template 'error', { title => 'error', content => $error };
   };
 
+#process attachments, giving each a random filename
   my @data = request->upload('files');
   if (@data) {
     foreach my $data (@data) {
@@ -68,11 +70,13 @@ post '/contact' => sub {
       };
     };
 
+#links to attachments
     @filelisting = map { "<li><a href=\"" . uri_for($rel_dir) . '/' . $_ . "\">$filenames{$_}</a></li>\n<p></p>" } @filenames;
     unshift @filelisting, "<p>Attachments:</p>\n<dl>\n";
     push @filelisting, "</dl>\n";
   };
 
+#omit large attachments
   @paths = () unless $size < $max_attachment;
 
   $body = "<p>From $name <$email></p><p>Submitted $date</p><p>$body</p><p>@filelisting</p>";
