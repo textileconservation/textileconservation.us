@@ -5,13 +5,13 @@
 
 <form id="contactForm" method="POST" enctype="multipart/form-data">
   <fieldset>
-    <label for="name">name</label>
+    <b>name</b><br/>
     <input placeholder="name" name="name" type="text" required>
-    <label for="email">email</label>
+    <b>email</b><br/>
     <input placeholder="name@email.net" name="email" type="email" required>
-    <label for="body">message</label>
+    <b>message</b><br/>
     <textarea placeholder="body of message…" name="body" required></textarea>
-    <label for="fileupload">attachments</label>
+    <b>attachments</b><br/>
     <input id="fileupload" type="file" name="files" multiple><br>
     <input class="button-primary" value="Send" type="submit">
   </fieldset>

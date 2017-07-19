@@ -1,0 +1,12 @@
+<p>From [% email %]</p>
+<p>Submitted [% date %]</p>
+<p>[% body %]</p>
+[% IF filelist.list.size %]
+   <p>Attachments:</p>
+   <dl>
+   <p>[% FOREACH filename IN filelist %]
+   <li><a href="[% rel_uri %]/[% filename %]">[% filenames.$filename %]</a></li>
+   [% END %]
+   </dl>
+[% END %]
+

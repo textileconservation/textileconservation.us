@@ -4,12 +4,17 @@ use Dancer2::Plugin::Email;
 use Email::Valid;
 use Try::Tiny;
 use File::Slurp;
+use Template;
 
 our $VERSION = '0.1';
 
-my $abs_dir = '/users/admin/git/tc.us/public/files';
-my $disposables = '/users/admin/git/tc.us/public/disposable_email_blacklist.conf'; #https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf
+my $base_dir = '/users/admin/git/textileconservation.us';
+my $upload_dir = "$base_dir/public/files";
 my $server = 'sg@textileconservation.us';
+my $disposables = "$base_dir/public/disposable_email_blacklist.conf"; #https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf
+
+#mail template
+my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLATE  => 1, }) || die Template->error(),"\n";
 
 my $max_attachment = 5242880;
 my $max_upload = 20971520;
@@ -26,14 +31,13 @@ post '/contact' => sub {
   my $path;
   my $size = 0;
   my $disposable = 0;
-  my ($rel_dir) = $abs_dir =~ /(\/[^\/.]*)$/;
+  my ($rel_upload_dir) = $upload_dir =~ /(\/[^\/.]*)$/;
   my @filenames;
   my @paths;
   my @filelisting;
   my @errors;
   my %filenames;
 
-#check address against list of disposable email providers
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
   foreach (@disposables) { $disposable = 1 if $emaildomain eq $_ };
@@ -49,13 +53,12 @@ post '/contact' => sub {
     return template 'error', { title => 'error', content => $error };
   };
 
-#process attachments, giving each a random filename
   my @data = request->upload('files');
   if (@data) {
     foreach my $data (@data) {
       my ($ext) = $data->basename =~ /(\.[^.]{2,4})$/;
       my $filename = substr(rand(),2).$ext;
-      my $path = path($abs_dir, $filename);
+      my $path = path($upload_dir, $filename);
       if (-e $path) {
   	return template 'error', { title => 'error', content => 'an unlikely error occurred...please return to the form and resubmit' };
       };
@@ -69,24 +72,29 @@ post '/contact' => sub {
   	return template 'error', { title => 'cancelled', content => 'file upload is too large' };
       };
     };
-
-#links to attachments
-    @filelisting = map { "<li><a href=\"" . uri_for($rel_dir) . '/' . $_ . "\">$filenames{$_}</a></li>\n<p></p>" } @filenames;
-    unshift @filelisting, "<p>Attachments:</p>\n<dl>\n";
-    push @filelisting, "</dl>\n";
   };
 
-#omit large attachments
   @paths = () unless $size < $max_attachment;
 
-  $body = "<p>From $name <$email></p><p>Submitted $date</p><p>$body</p><p>@filelisting</p>";
+  my $mail_vars = {
+	      rel_uri => uri_for($rel_upload_dir),
+	      date => $date,
+	      email => $email,
+	      body => $body,
+	      server => $server,
+	      filelist => \@filenames,
+	      filenames => \%filenames,
+  };
+  my $mail_body;
+  
+  $mail_template->process('mail_body.tt', $mail_vars, \$mail_body) || die $mail_template->error();
 
   try {
     email {
       from    => "$name <$email>",
       to      => "$server",
       subject => 'textileconservation form submission',
-      body    => "$body",
+      body    => "$mail_body",
       multipart => 'related',
       attach  => [ @paths ],
       type    => 'html',
@@ -95,14 +103,16 @@ post '/contact' => sub {
       return template 'error', { title => 'error', content => "could not send email: $_" };
   };
 
-  $body = "<p>Your inquiry was received $date.</p><p>The studio will review it and contact you as soon as possible.</p><p>Thank you,<br>sg\@textileconservation.us<br>";
+  my $mail_ack;
+  
+  $mail_template->process('mail_ack.tt', $mail_vars, \$mail_ack) || die $mail_template->error();
 
   try {
     email {
       from    => "$server",
       to      => "$name <$email>",
       subject => 'inquiry acknowledgement',
-      body    => "$body",
+      body    => "$mail_ack",
       type    => 'html',
     };
   } catch {
