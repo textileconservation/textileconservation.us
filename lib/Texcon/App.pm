@@ -8,7 +8,7 @@ use Template;
 
 our $VERSION = '0.1';
 
-my $base_dir = '/users/admin/git/textileconservation.us';
+my $base_dir = '/var/www/textileconservation.us';
 my $server = 'sg@textileconservation.us';
 
 my $upload_dir = "$base_dir/public/files";
@@ -113,7 +113,7 @@ post '/contact' => sub {
   } catch {
       return template 'error', { title => 'error', content => "could not send email: $_" };
   };
-  redirect '/complete';
+  return template 'complete', { title => 'thank you.' };
 };
 
 true;
