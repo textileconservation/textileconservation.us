@@ -9,9 +9,9 @@ $eumm_version =~ s/_//;
 
 WriteMakefile(
     NAME                => 'Texcon::App',
-    AUTHOR              => q{<sg@textileconservation.us>},
+    AUTHOR              => q{YOUR NAME <sg@textileconservation.us>},
     VERSION_FROM        => 'lib/Texcon/App.pm',
-    ABSTRACT            => 'TEXTILE CONSERVATION SITE',
+    ABSTRACT            => 'YOUR APPLICATION ABSTRACT',
     ($eumm_version >= 6.3001
       ? ('LICENSE'=> 'perl')
       : ()),

@@ -9,11 +9,10 @@ use Template;
 our $VERSION = '0.1';
 
 my $base_dir = '/users/admin/git/textileconservation.us';
-my $upload_dir = "$base_dir/public/files";
 my $server = 'sg@textileconservation.us';
-my $disposables = "$base_dir/public/disposable_email_blacklist.conf"; #https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf
 
-#mail template
+my $upload_dir = "$base_dir/public/files";
+my $disposables = "$base_dir/public/disposable_email_blacklist.conf"; #https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf
 my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLATE  => 1, }) || die Template->error(),"\n";
 
 my $max_attachment = 5242880;
@@ -47,11 +46,7 @@ post '/contact' => sub {
     else {  push @errors, "Email is missing."; };
   push @errors, "Body of message is missing." unless $body;
   push @errors, "Email is disposable. Please enter a permanent one." if $disposable == 1;
-
-  if (@errors) {
-    my $error = join("</p><p>",@errors,"Please return to the form and correct it.");
-    return template 'error', { title => 'error', content => $error };
-  };
+  return template 'error', { title => 'error', content => \@errors } if @errors;
 
   my @data = request->upload('files');
   if (@data) {
@@ -119,10 +114,6 @@ post '/contact' => sub {
       return template 'error', { title => 'error', content => "could not send email: $_" };
   };
   redirect '/complete';
-};
-
-any qr{.+\/$} => sub {
-  redirect '/';
 };
 
 true;

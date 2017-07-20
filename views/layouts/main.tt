@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="sg@textileconservation.us">
-    <meta name="description" content="textile conservation and restoration services">
+    <meta name="description" content="new york city textile conservation and restoration services">
     <meta name="msvalidate.01" content="471862C32C110D8709D0C4EBD5E18D18" />
     <title>textileconservation.us</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="dist/milligram.min.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="[% request.uri_base %]/css/normalize.css">
+    <link rel="stylesheet" href="[% request.uri_base %]/dist/milligram.min.css">
+    <link rel="stylesheet" href="[% request.uri_base %]/css/main.css">
   </head>
     <body>
       <main class="wrapper">
@@ -19,7 +19,7 @@
       <ul class="navigation-list float-left">
 	<li class="navigation-item" style="margin: 0;">
 	  <a class="navigation-title" href="/">
-	    <h1 class="title">textileconservation.us</h1>
+	    <h5 class="title">textileconservation.us</h5>
 	  </a>
 	</li>
 	<li class="navigation-item">
@@ -44,7 +44,7 @@
     </nav>
       <section class="container" id="page content">
 	
-	<% content %>
+	[% content %]
 
       </section>
       <footer class="footer">
@@ -53,6 +53,6 @@
         </section>
       </footer>
     </main>
-    <script src="scripts/main.js"></script>
+    <script src="[% request.uri_base %]/scripts/main.js"></script>
     </body>
 </html>

@@ -1,2 +1,4 @@
-<h5 class="title"><% title %></h5>
-<p><% content %></p>
+<h5 class="title">[% title %]</h5>
+<p>[% FOREACH error IN content %]
+   <p>[% error %]</p>
+[% END %]
