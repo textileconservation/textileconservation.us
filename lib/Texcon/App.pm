@@ -22,6 +22,7 @@ get '/' => sub {
     template 'index';
 };
 
+#the completely unnecessary mail form, with standard error checking and some vandal security
 post '/contact' => sub {
   my $name = param "name";
   my $email = param "email";
@@ -37,6 +38,7 @@ post '/contact' => sub {
   my @errors;
   my %filenames;
 
+#compare email domain against list of disposable email sites
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
   foreach (@disposables) { $disposable = 1 if $emaildomain eq $_ };
@@ -48,6 +50,7 @@ post '/contact' => sub {
   push @errors, "Email is disposable. Please enter a permanent one." if $disposable == 1;
   return template 'error', { title => 'error', content => \@errors } if @errors;
 
+#process upload, randomize file name
   my @data = request->upload('files');
   if (@data) {
     foreach my $data (@data) {
@@ -80,7 +83,8 @@ post '/contact' => sub {
 	      filelist => \@filenames,
 	      filenames => \%filenames,
   };
-  my $mail_body;
+
+  my $mail_body; #notification
   
   $mail_template->process('mail_body.tt', $mail_vars, \$mail_body) || die $mail_template->error();
 
@@ -98,7 +102,7 @@ post '/contact' => sub {
       return template 'error', { title => 'error', content => "could not send email: $_" };
   };
 
-  my $mail_ack;
+  my $mail_ack; #acknowledgement
   
   $mail_template->process('mail_ack.tt', $mail_vars, \$mail_ack) || die $mail_template->error();
 
