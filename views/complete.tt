@@ -1,3 +1,11 @@
-<h5 class="title">thank you.</h5>
-<p>The studio will review your inquiry and reply as soon as possible.</p>
-<p>You should receive an automated confirmation that your inquiry has been received.</p>
+<div class="container">
+  <div class="row">
+    <div class="column">
+<p><h5 class="title">thank you</h5>
+<p>I will review your inquiry and reply as soon as possible.</p>
+
+<a class="mail link" href="mailto:sg@textileconservation.us"><p align=right>sg@textileconservation.us</a>
+
+</div>
+</div>
+</div>

@@ -1,22 +1,31 @@
-<h5 class="title">contacting the studio:</h5>
-<p>Please contact the studio by email. You may use either the form on this page or the link that appears at the bottom of each page of the site.</p>
-<p>If this is an initial inquiry concerning a textile, include some information on the textile's history and environment if you can. If possible, attach photographs of the item and any areas of concern.</p>
-<p>The studio will reply with suggestions appropriate to your situation. Most often, this will lead to a detailed examination of the item that produces a written treatment plan.</p>
+<div class="container">
+  <div class="row">
+    <div class="column">
 
+<p>
+<h5 class="title">what to expect</h5>
+<p>All projects begin with an in person examination. A written report outlining the condition, treatment and an estimate of cost is provided. Once agreed upon, a signed contract is required in order to begin work. Upon completion a post treatment report will be provided.</p>
+<p>Additional expenses might include materials, travel, shipping and insurance.</p>
+<p>The best way to get started is to contact me by email. You may use either the form on this page or the email link at bottom. If photographs are available they should be sent with your query. This introduction will be followed with further discussion.</p>
+
+<table><tr><td>
 <form id="contactForm" method="POST" enctype="multipart/form-data">
   <fieldset>
-    <b>name</b><br/>
     <input placeholder="name" name="name" type="text" required>
-    <b>email</b><br/>
-    <input placeholder="name@email.net" name="email" type="email" required>
-    <b>message</b><br/>
-    <textarea placeholder="body of message…" name="body" required></textarea>
-    <b>attachments</b><br/>
+    <input placeholder="email" name="email" type="email" required>
+    <textarea placeholder="message…" name="body" required></textarea>
     <input id="fileupload" type="file" name="files" multiple><br>
-    <input class="button-primary" value="Send" type="submit">
+    <input class="button" value="Send" type="submit">
   </fieldset>
 </form>
+</td></tr></table>
 
 <script>
 $("#contactForm").validate();
 </script>
+
+<a class="mail link" href="mailto:sg@textileconservation.us"><p align=right>sg@textileconservation.us</a>
+
+</div>
+</div>
+</div>

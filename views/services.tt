@@ -1,9 +1,39 @@
-<h5 class="title">studio services:</h5>
-<p>Stabilization, stitch repair, stitch/pressure mounting, linings, hanging systems, consolidation, adhesive treatment, dry surface cleaning, vacuuming, wet cleaning, suction table and micro-emulsion localized cleaning</p>
+<div class="container">
+  <div class="row">
+    <div class="column">
 
-<h5 class="title">onsite services:</h5>
-<p>Installation/deinstallation, evaluations, repair, minor cleaning, recommendations for storage practices/procedures</p>
-<p>Preparation of loaned artwork; packaging for travel and exhibition</p>
+<p>
+<h5 class="title">studio services</h5>
+<ul>
+<li>Condition reports and treatment proposals outlining condition, treatments and costs</li>
+<li>Cleaning: surface, aqueous and non-aqueous cleaning methods</li>
+<li>Stabilization and repair</li>
+<li>Consolidation</li>
+<li>Reweaving</li>
+</ul>
 
-<h5 class="title">consultation services:</h5>
-<p>Treatment proposals and condition reports</p>
+<h5 class="title">on-site services</h5>
+<ul>
+<li>Collections care</li>
+<li>Exhibition consultation</li>
+<li>Preparation of textile art for loans; packing and shipping</li>
+<li>Installations and deinstallations</li>
+<li>Educational lectures</li>
+<li>Preventative consultation</li>
+<li>Recommendations for storage practices and procedures</li>
+</ul>
+
+<h5 class="title">mountings</h5>
+<ul>
+<li>Stitch
+<li>Pressure
+<li>Temporary
+<li>Hanging systems for display
+<li>Linings: to protect the back of the textile from damage and dirt
+</ul>
+
+<a class="mail link" href="mailto:sg@textileconservation.us"><p align=right>sg@textileconservation.us</a>
+
+</div>
+</div>
+</div>

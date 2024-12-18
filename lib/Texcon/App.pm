@@ -8,11 +8,10 @@ use Template;
 
 our $VERSION = '0.1';
 
-my $base_dir = '/users/admin/git/textileconservation.us';
+my $base_dir = '/var/www/textileconservation.us';
 my $upload_dir = "$base_dir/public/files";
 my $server = 'sg@textileconservation.us';
-my $disposables = "$base_dir/public/disposable_email_blacklist.conf"; #https://raw.githubusercontent.com/martenson/disposable-email-domains/master/disposable_email_blacklist.conf
-
+my $disposables = "$base_dir/public/disposable_email_blocklist.conf";
 #mail template
 my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLATE  => 1, }) || die Template->error(),"\n";
 
