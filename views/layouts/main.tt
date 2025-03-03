@@ -21,8 +21,13 @@
       <ul class="navigation-list float-left">
 	<li class="navigation-item">
 	  <a class="navigation-title" href="/">
-	    <img src="images/tree.png" height=30>&nbsp;<h1 class="title">shelley greenspan</h1>
-	  </a>
+	    				<img src="images/tree.png" height=45>&nbsp;
+	    					<div class=header1>
+	    						<h1 class="title">shelley greenspan
+	    						<div class=header2>textile conservation</div>
+	    						</h1>
+	    					</div>
+	  				</a>
 	</li>
 	<li class="navigation-item">
 	  <a class="navigation-link" href="#popover-grid" data-popover>

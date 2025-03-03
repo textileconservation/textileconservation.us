@@ -36,3 +36,13 @@ input::file-selector-button {
     text-transform: uppercase;
     white-space: nowrap
 }
+
+div.header1 {
+  position: relative;
+  top: -72px;
+  left: 20px;
+}
+div.header2 {
+  position: relative;
+  top: -36px;
+}
