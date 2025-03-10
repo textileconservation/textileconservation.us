@@ -11,7 +11,7 @@ body  {
     background-size: cover;
 }
 .column {
-    background: rgba(255,255,255,0.75);
+    background: rgba(255,255,255,0.85);
     border-style: solid;
     border-width: small;
     border-color: rgba(52,74,98,1);
@@ -36,7 +36,12 @@ input::file-selector-button {
     text-transform: uppercase;
     white-space: nowrap
 }
-
+.left {float:left}
+.right {float:right; margin-right:20px;}
+.clear {clear:both}
+a:hover{
+  fill:#9b4dca;
+}
 div.header1 {
   position: relative;
   top: -72px;

@@ -44,10 +44,10 @@
                             <div class="popover" id="popover-grid">
                                 <ul class="popover-list">
                                     <li class="popover-item">
-                                        <a class="popover-link" href="/services" title="services">services</a>
+                                        <a class="popover-link" href="#services" title="services">services</a>
                                     </li>
                                     <li class="popover-item">
-                                        <a class="popover-link" href="/contact" title="contact">contact</a>
+                                        <a class="popover-link" href="#contact" title="contact">contact</a>
                                     </li>
                                 </ul>
                             </div>
