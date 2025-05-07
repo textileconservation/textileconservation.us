@@ -6,7 +6,7 @@
 <h5 class="title">what to expect</h5>
 <p>All projects begin with an in person examination. A written report outlining the condition, treatment and an estimate of cost is provided. Once agreed upon, a signed contract is required in order to begin work. Upon completion a post treatment report will be provided.</p>
 <p>Additional expenses might include materials, travel, shipping and insurance.</p>
-<p>The best way to get started is to contact me by email. You may use either the form on this page or the email link at bottom. If photographs are available they should be sent with your query. This introduction will be followed with further discussion.</p>
+<p>Contact me using this form. If photographs are available select or drag onto the choose files button.</p>
 
 <table><tr><td>
 <form id="contactForm" method="POST" enctype="multipart/form-data">
@@ -14,7 +14,8 @@
     <input placeholder="name" name="name" type="text" required>
     <input placeholder="email" name="email" type="email" required>
     <textarea placeholder="message…" name="body" required></textarea>
-    <input id="fileupload" type="file" name="files" multiple><br>
+    <input name="pw" type="text" tabindex="-1" autocomplete="x">
+<input id="fileupload" type="file" name="files" multiple><br>
     <input class="button" value="Send" type="submit">
   </fieldset>
 </form>
@@ -24,9 +25,7 @@
 $("#contactForm").validate();
 </script>
 
-<div class="left clear"><img src="images/tree30.png" height=39><img src="images/sgtc30.png" alt="sgtc width="30" height="30"></div>
-<div class="right"><a class="mail link" href="mailto:sg@textileconservation.us" align="right">sg@textileconservation.us</a></div>
-
+<div class="right clear"><img src="images/treelogo40.png" height=34></div>
 
 </div>
 </div>

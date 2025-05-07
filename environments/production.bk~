@@ -1,22 +1,11 @@
 # configuration file for production environment
 
-#session: Memcached
-#engines:
-#  session:
-#    Memcached:
-#      memcached_servers: 10.0.1.31:11211,10.0.1.32:11211,/var/sock/memcached
-#      fatal_cluster_unreachable: 0
-
 # only log warning and error messsages
-log: "info"
+log: "warning"
 
 # log message to a file in logs/
 logger: "file"
-engines:
-  logger:
-    File:
-      log_dir: "/var/log/texcon"
-      file_name: "formbots.log"
+logger: "File::RotateLogs"
 
 # don't consider warnings critical
 warnings: 0

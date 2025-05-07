@@ -21,6 +21,7 @@ charset: "UTF-8"
 #template: "simple"
 
 template: "template_toolkit"
+
 engines:
   template:
     template_toolkit:
@@ -29,4 +30,3 @@ engines:
 
 auto_page: 1
 error_template: error.tt
-

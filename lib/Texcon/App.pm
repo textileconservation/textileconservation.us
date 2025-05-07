@@ -18,15 +18,24 @@ my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLA
 my $max_attachment = 5242880;
 my $max_upload = 20971520;
 
+hook before => sub {
+  var get_time => scalar(time);
+};
+
 get '/' => sub {
-    template 'index';
+  template 'index';
 };
 
 post '/contact' => sub {
+  my $post_time = scalar(time);
+  my $get_time = param "get_time";
+  my $bot = param "pw";
+  my $address = request->remote_address;
   my $name = param "name";
   my $email = param "email";
   my $body = param "body";
   my $date = localtime;
+
   my $path;
   my $size = 0;
   my $disposable = 0;
@@ -36,6 +45,12 @@ post '/contact' => sub {
   my @filelisting;
   my @errors;
   my %filenames;
+
+  my $rapid = 1 if $post_time - $get_time < 5;
+
+#    push @errors, "get time: $get_time",
+#    "post time: $post_time",
+#    "rapid: $rapid";
 
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
@@ -51,6 +66,11 @@ post '/contact' => sub {
     my $error = join("</p><p>",@errors,"Please return to the form and correct it.");
     return template 'error', { title => 'error', content => $error };
   };
+
+  if (my $toggle = $bot || $rapid) {
+    error "$address, $name, $email, $body, $toggle";
+    return template 'error', { title => 'thank you', content => 'inquiry processed' };
+  }
 
   my @data = request->upload('files');
   if (@data) {

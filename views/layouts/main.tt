@@ -18,53 +18,46 @@
       <main class="wrapper">
       <nav class="navigation">
       <section class="container">
-
-
-      	<ul class="navigation-list">
-                       <div class="left clear">
-                          <li class="navigation-item" >
-                            <a class="navigation-title" href="/" title="shelley greenspan - textile conservation">
-                                <img src="images/tree.png" height=45>&nbsp;
-                                    <h1 class="title">
-                                        <div class=header1>shelley greenspan
-                                        <div class=header2>textile conservation</div>
-                                    </h1>
-                            </a>
-                         </li>
-                       </div>
-                        <div class="right">
-                            <li class="navigation-item">
-                               <a class="navigation-link" href="#popover-grid" data-popover>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="13px" viewBox="0 0 20 13">   
-                                    <rect width="20" height="3"/>
-                                    <rect y="5" width="20" height="3"/>
-                                    <rect y="10" width="20" height="3"/>
-                                </svg>
-                                </a>
-                            <div class="popover" id="popover-grid">
-                                <ul class="popover-list">
-                                    <li class="popover-item">
-                                        <a class="popover-link" href="/services" title="services">services</a>
-                                    </li>
-                                    <li class="popover-item">
-                                        <a class="popover-link" href="/contact" title="contact">contact</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            </li>  
-                        </div>
-                   </ul>
-
-
-
-
+	<ul class="navigation-list">
+	  <div class="left clear">
+	    <li class="navigation-item" >
+	      <a class="navigation-title" href="/" title="shelley greenspan - textile conservation">
+		<img src="images/tree.png" height=45>&nbsp;
+		<h1 class="title">
+		  <div class=header1>shelley greenspan
+		    <div class=header2>textile conservation</div>
+		</h1>
+	      </a>
+	    </li>
+	    </div>
+	    <div class="right">
+	      <li class="navigation-item">
+		<a class="navigation-link" href="#popover-grid" data-popover>
+		  <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="13px" viewBox="0 0 20 13">
+		    <rect width="20" height="3"/>
+		    <rect y="5" width="20" height="3"/>
+		    <rect y="10" width="20" height="3"/>
+		  </svg>
+		</a>
+		<div class="popover" id="popover-grid">
+		  <ul class="popover-list">
+		    <li class="popover-item">
+		      <a class="popover-link" href="/services" title="services">services</a>
+		    </li>
+		    <li class="popover-item">
+		      <a class="popover-link" href="/mailcontact" title="contact">contact</a>
+		    </li>
+		  </ul>
+		</div>
+	      </li>
+	    </div>
+	</ul>
       </section>
       </nav>
       
       <section class="container" id="page content">
 	
-	
-		<% content %>
+	<% content %>
 
       </section>
       </main>
