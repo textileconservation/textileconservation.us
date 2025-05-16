@@ -48,10 +48,6 @@ post '/contact' => sub {
 
   my $rapid = 1 if $post_time - $get_time < 5;
 
-#    push @errors, "get time: $get_time",
-#    "post time: $post_time",
-#    "rapid: $rapid";
-
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
   foreach (@disposables) { $disposable = 1 if $emaildomain eq $_ };
@@ -66,6 +62,8 @@ post '/contact' => sub {
     my $error = join("</p><p>",@errors,"Please return to the form and correct it.");
     return template 'error', { title => 'error', content => $error };
   };
+
+  $body =~ s/[\r\n]+$//;
 
   if (my $toggle = $bot || $rapid) {
     error "$address, $name, $email, $body, $toggle";
