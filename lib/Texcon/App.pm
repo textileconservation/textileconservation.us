@@ -18,7 +18,7 @@ my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLA
 my $max_attachment = 5242880;
 my $max_upload = 20971520;
 
-hook before => sub {
+hook before  => sub {
   var get_time => scalar(time);
 };
 
@@ -29,7 +29,7 @@ get '/' => sub {
 post '/contact' => sub {
   my $post_time = scalar(time);
   my $get_time = param "get_time";
-  my $bot = param "pw";
+  my $pw = param "pw";
   my $address = request->remote_address;
   my $name = param "name";
   my $email = param "email";
@@ -63,10 +63,9 @@ post '/contact' => sub {
     return template 'error', { title => 'error', content => $error };
   };
 
-  $body =~ s/[\r\n]+$//;
-
-  if (my $toggle = $bot || $rapid) {
-    error "$address, $name, $email, $body, $toggle";
+  if (my $bot = $pw || $rapid) {
+    $body =~ s/[\r\n|\r|\n]+//s;
+    error "$address, $name, $email, $body, $bot";
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 
