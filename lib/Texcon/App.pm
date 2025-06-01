@@ -66,7 +66,7 @@ post '/contact' => sub {
   };
 
   if (my $bot = $pw ? $pw : $rapid ? $rapid : undef) {
-    $body =~ s/[\r\n|\r|\n]+//s;
+    $body =~ s/[\r\n|\r|\n]+//gms;
     error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
