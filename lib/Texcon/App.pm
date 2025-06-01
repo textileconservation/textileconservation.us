@@ -36,6 +36,10 @@ post '/contact' => sub {
   my $body = param "body";
   my $date = localtime;
 
+  my $rapid = 1 if $post_time - $get_time < 5;
+
+  info "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, h:$pw, r:$rapid";
+
   my $path;
   my $size = 0;
   my $disposable = 0;
@@ -45,8 +49,6 @@ post '/contact' => sub {
   my @filelisting;
   my @errors;
   my %filenames;
-
-  my $rapid = 1 if $post_time - $get_time < 5;
 
   my @disposables = read_file($disposables, chomp => 1);
   my ($emaildomain) = $email =~ /\@(.*)$/;
@@ -63,9 +65,9 @@ post '/contact' => sub {
     return template 'error', { title => 'error', content => $error };
   };
 
-  if (my $bot = $pw || $rapid) {
+  if (my $bot = $pw ? $pw : $rapid ? $rapid : undef) {
     $body =~ s/[\r\n|\r|\n]+//s;
-    error "$address, $name, $email, $body, $bot";
+    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 
