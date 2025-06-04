@@ -36,9 +36,15 @@ post '/contact' => sub {
   my $body = param "body";
   my $date = localtime;
 
-  my $rapid = 1 if $post_time - $get_time < 5;
+  my $rapid = 1 if $post_time - $get_time < 20;
 
-  info "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, h:$pw, r:$rapid";
+#  info "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, h:$pw, r:$rapid";
+
+  if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
+    $body =~ s/[\r\n|\r|\n]+//gms;
+    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
+    return template 'error', { title => 'thank you', content => 'inquiry processed' };
+  }
 
   my $path;
   my $size = 0;
@@ -64,12 +70,6 @@ post '/contact' => sub {
     my $error = join("</p><p>",@errors,"Please return to the form and correct it.");
     return template 'error', { title => 'error', content => $error };
   };
-
-  if (my $bot = $pw ? $pw : $rapid ? $rapid : undef) {
-    $body =~ s/[\r\n|\r|\n]+//gms;
-    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
-    return template 'error', { title => 'thank you', content => 'inquiry processed' };
-  }
 
   my @data = request->upload('files');
   if (@data) {
