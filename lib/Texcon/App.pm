@@ -38,11 +38,10 @@ post '/contact' => sub {
 
   my $rapid = 1 if $post_time - $get_time < 20;
 
-#  info "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, h:$pw, r:$rapid";
-
   if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
     $body =~ s/[\r\n|\r|\n]+//gms;
     error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
+    #fail2ban scans error and bans bot address. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 
