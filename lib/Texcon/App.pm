@@ -12,7 +12,6 @@ my $base_dir = '/var/www/textileconservation.us';
 my $upload_dir = "$base_dir/public/files";
 my $server = 'sg@textileconservation.us';
 my $disposables = "$base_dir/public/disposable_email_blocklist.conf";
-#mail template
 my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLATE  => 1, }) || die Template->error(),"\n";
 
 my $max_attachment = 5242880;
@@ -40,8 +39,7 @@ post '/contact' => sub {
 
   if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
     $body =~ s/[\r\n|\r|\n]+//gms;
-    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot";
-    #fail2ban scans error and bans bot address. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
+    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 
@@ -77,7 +75,7 @@ post '/contact' => sub {
       my $filename = substr(rand(),2).$ext;
       my $path = path($upload_dir, $filename);
       if (-e $path) {
-  	return template 'error', { title => 'error', content => 'an unlikely error occurred...please return to the form and resubmit' };
+        return template 'error', { title => 'error', content => 'an unlikely error occurred...please return to the form and resubmit' };
       };
       $data->link_to($path);
       push @filenames, $filename;
@@ -85,8 +83,8 @@ post '/contact' => sub {
       $filenames{$filename} = $data->basename;
       $size += -s $path;
       if ($size > $max_upload) {
-	map { unlink $_ } @paths;
-  	return template 'error', { title => 'cancelled', content => 'file upload is too large' };
+        map { unlink $_ } @paths;
+        return template 'error', { title => 'cancelled', content => 'file upload is too large' };
       };
     };
   };
