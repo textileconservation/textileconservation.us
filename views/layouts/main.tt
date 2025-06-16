@@ -2,23 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="font-src 'self' data:; img-src 'self' https://textileconservation.us; default-src 'self' https://textileconservation.us">
-
-
-
-
-    add_header Content-Security-Policy " \
-default-src 'self' 'unsafe-inline' https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css https://fonts.googleapis.com/css/; \
-font-src 'self' https://netdna.bootstrapcdn.com https://fonts.gstatic.com; \
-frame-ancestors 'self'; \
-frame-src 'self'; \
-style-src 'self' 'unsafe-inline' https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css https://fonts.googleapis.com/css/; \
-style-src-elem 'self' 'unsafe-inline' https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css https://fonts.googleapis.com/css/; \
-"
-
-
-
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="shelley greenspan">
     <meta name="description" content="shelley greenspan textile conservation and restoration services">
