@@ -24,10 +24,6 @@
 </form>
 </td></tr></table>
 
-<script>
-$("#contactForm").validate();
-</script>
-
 <div class="right clear"><img src="images/treelogo40.png" height=34></div>
 
 </div>
