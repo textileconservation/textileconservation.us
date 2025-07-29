@@ -18,6 +18,12 @@ body  {
     display: flex;
     padding: 10px;
 }
+.column-no-border {
+    background: rgba(255,255,255,0.85);
+    border-style: none;
+    display: flex;
+    padding: 10px;
+}
 input::file-selector-button {
     background-color: transparent;
     color: #9b4dca;

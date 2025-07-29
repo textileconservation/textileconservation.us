@@ -39,7 +39,7 @@ post '/contact' => sub {
 
   if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
     $body ? $body =~ s/[\r\n|\r|\n]+//gms : ($body = '');
-    error "$address, gt:$get_time, pt:$post_time, n:$name, e:$email, b:$body, bot:$bot"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
+    error "$address; gt:$get_time; pt:$post_time; n:$name; e:$email; bot:$bot; b:$body"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 
@@ -75,7 +75,7 @@ post '/contact' => sub {
       my $filename = substr(rand(),2).$ext;
       my $path = path($upload_dir, $filename);
       if (-e $path) {
-        return template 'error', { title => 'error', content => 'an unlikely error occurred...please return to the form and resubmit' };
+  	return template 'error', { title => 'error', content => 'an unlikely error occurred...please return to the form and resubmit' };
       };
       $data->link_to($path);
       push @filenames, $filename;
@@ -83,8 +83,8 @@ post '/contact' => sub {
       $filenames{$filename} = $data->basename;
       $size += -s $path;
       if ($size > $max_upload) {
-        map { unlink $_ } @paths;
-        return template 'error', { title => 'cancelled', content => 'file upload is too large' };
+	map { unlink $_ } @paths;
+  	return template 'error', { title => 'cancelled', content => 'file upload is too large' };
       };
     };
   };
@@ -134,6 +134,57 @@ post '/contact' => sub {
       return template 'error', { title => 'error', content => "could not send email: $_" };
   };
   redirect '/complete';
+};
+
+get '/spambots' => sub {
+  use Net::Whois::IANA;
+  use Geography::Countries;
+  use Text::CSV::Simple;
+  use Storable;
+  use Carp;
+  
+  my $botgeo = retrieve("$base_dir/public/botgeo.txt");
+  my $iana = Net::Whois::IANA->new;
+  my $parser = Text::CSV::Simple->new({ binary => 1, sep_char => ";" });
+  my @logfields = (qw/dateip start end name email phantom body/);
+  $parser->field_map(@logfields);
+  my $botfreq;
+
+  my $logfile1 = "/var/log/texcon/formbots.log.1";
+  my $logfile2 = "/var/log/texcon/formbots.log";
+  my @data1 = $parser->read_file($logfile1);
+  my @data2 = $parser->read_file($logfile2);
+  my @data = (@data1,@data2);
+
+  foreach my $line (@data) {
+    map { @$line{$_} =~ s/^\s\w+:// } @logfields;
+    @$line{body} =~ s/^(.*)\sin\s.*$/$1/;
+    @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
+    @$line{ip} = @$line{dateip};
+    @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
+    @$line{dateip} =~ s/^.*@(.*)>.*$/$1/;
+    @$line{duration} = @$line{end} - @$line{start};
+    $botgeo->{@$line{ip}} = undef unless $botgeo->{@$line{ip}};
+    $botfreq->{@$line{ip}}++;
+  }
+
+  foreach my $ip (keys %$botgeo) {
+    unless ($botgeo->{$ip}) {
+      try {
+        $iana->whois_query(-ip=>$ip);
+        $botgeo->{$ip} = country $iana->country;
+      } catch {
+        carp "caught error: $_"; # not $@
+      };
+    }
+  }
+
+  map { @$_{geo} = $botgeo->{@$_{ip}}, @$_{freq} = $botfreq->{@$_{ip}}  } @data;
+
+  store ($botgeo, "$base_dir/public/botgeo.txt");
+
+  template 'spambots', { data => \@data };
+
 };
 
 any qr{.+\/$} => sub {

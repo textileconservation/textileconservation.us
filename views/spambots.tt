@@ -1,0 +1,63 @@
+<h6>
+<div class="container">
+
+   <div class="row">
+        <div class="column column-100 column-no-border">IP addresses banned from textileconservation.us, resulting from malicious form data posted on textileconservation.us/contact. Ban criteria based on trap entries and/or get-post timings. Multiple visits by an ip appear in bold. Logs span current and previous month.</div>
+    </div>
+
+    <div class="row">
+        <div class="column column-100 column-no-border">&nbsp;</div>
+    </div>
+
+   <div class="row">
+        <div class="column column-no-border"><strong>date/time</strong></div>
+        <div class="column column-no-border">ip&nbsp;&nbsp;&nbsp;&nbsp;<strong>visits</strong>&nbsp;&nbsp;&nbsp;&nbsp;timing(s)</div>
+        <div class="column column-no-border">country</div>
+    </div>
+
+    <div class="row">
+        <div class="column column-no-border">name</div>
+        <div class="column column-no-border">email</div>
+        <div class="column column-no-border">trap string</div>
+    </div>
+
+    <div class="row">
+        <div class="column column-100 column-no-border">Opening of message field, if any.</div>
+    </div>
+
+    <div class="row">
+        <div class="column column-100 column-no-border">&nbsp;</div>
+    </div>
+
+</h6>
+</div>
+
+<% FOREACH id IN data.reverse %>
+
+<h6>
+<div class="container">
+
+    <div class="row">
+        <div class="column column-no-border"><strong><% id.dateip %></strong></div>
+        <div class="column column-no-border"><% id.ip %>&nbsp;&nbsp;
+        <% IF id.freq > 1 %><strong>x<% id.freq %></strong><% END %>&nbsp;&nbsp;
+        <% id.duration %>s</div>
+        <div class="column column-no-border"><% id.geo %></div>
+    </div>
+
+    <div class="row">
+        <div class="column column-no-border"><% id.name %></div>
+        <div class="column column-no-border"><% id.email %></div>
+        <div class="column column-no-border"><% IF id.phantom != 1 %><% id.phantom %><% END %></div>
+    </div>
+
+    <div class="row">
+        <div class="column column-100 column-no-border"><% id.body %></div>
+    </div>
+
+</h6>
+</div>
+
+<% END %>
+
+<div class="right clear"><img src="images/treelogo40.png" height=34></div>
