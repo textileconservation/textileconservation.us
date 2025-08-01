@@ -148,7 +148,8 @@ get '/spambots' => sub {
   my $parser = Text::CSV::Simple->new({ binary => 1, sep_char => ";" });
   my @logfields = (qw/dateip start end name email phantom body/);
   $parser->field_map(@logfields);
-  my $botfreq;
+  my $hostfreq;
+  my $networkfreq;
 
   my $logfile1 = "/var/log/texcon/formbots.log.1";
   my $logfile2 = "/var/log/texcon/formbots.log";
@@ -162,10 +163,15 @@ get '/spambots' => sub {
     @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
     @$line{ip} = @$line{dateip};
     @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
+    @$line{network} = @$line{ip};
+    @$line{network} =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
+    @$line{host} = @$line{ip};
+    @$line{host} =~ s/^\d+\.\d+\.\d+(\.\d+)$/$1/;
     @$line{dateip} =~ s/^.*@(.*)>.*$/$1/;
     @$line{duration} = @$line{end} - @$line{start};
     $botgeo->{@$line{ip}} = undef unless $botgeo->{@$line{ip}};
-    $botfreq->{@$line{ip}}++;
+    $hostfreq->{@$line{ip}}++;
+    $networkfreq->{@$line{network}}++;
   }
 
   foreach my $ip (keys %$botgeo) {
@@ -179,7 +185,7 @@ get '/spambots' => sub {
     }
   }
 
-  map { @$_{geo} = $botgeo->{@$_{ip}}, @$_{freq} = $botfreq->{@$_{ip}}  } @data;
+  map { @$_{geo} = $botgeo->{@$_{ip}}, @$_{hostfreq} = $hostfreq->{@$_{ip}}, @$_{networkfreq} = $networkfreq->{@$_{network}} } @data;
 
   store ($botgeo, "$base_dir/public/botgeo.txt");
 
