@@ -7,6 +7,7 @@ use lib "$FindBin::Bin/../lib";
 
 use Plack::Builder;
 use Texcon::App;
+use Texcon::App::Utility;
 
 builder {
   enable 'Plack::Middleware::Static',

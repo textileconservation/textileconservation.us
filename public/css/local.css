@@ -10,6 +10,22 @@ body  {
     background-attachment: fixed;
     background-size: cover;
 }
+.button.button-clear2,
+button.button-clear2,
+input[type='button'].button-clear2,
+input[type='reset'].button-clear2,
+input[type='submit'].button-clear2 {
+  background-color: transparent;
+  border: none;
+  color: #9b4dca;
+  cursor: pointer;
+  display: inline;
+  font-size: 1.6rem;
+  height: 0rem;
+  line-height: 0rem;
+  letter-spacing: 0;
+  padding: 0 0rem;
+}
 .column {
     background: rgba(255,255,255,0.85);
     border-style: solid;
@@ -23,6 +39,13 @@ body  {
     border-style: none;
     display: flex;
     padding: 10px;
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #9b4dca;
+  border-radius: 50%;
+  display: inline-block;
 }
 input::file-selector-button {
     background-color: transparent;

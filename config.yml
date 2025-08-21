@@ -27,6 +27,7 @@ engines:
     template_toolkit:
       start_tag: '<%'
       end_tag:   '%>'
+      ENCODING: utf8
 
 auto_page: 1
 error_template: error.tt

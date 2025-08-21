@@ -2,7 +2,7 @@
 <div class="container">
 
    <div class="row">
-        <div class="column column-100 column-no-border">A register of banned spambots posting to <a href="https://textileconservation.us/contact">textileconservation.us/contact</a>. Multiple network/host visits noted using <strong>x(n)</strong>. Listing spans current and previous month.</div>
+        <div class="column column-100 column-no-border">Log of banned spambots posting to <a href="https://textileconservation.us/contact">textileconservation.us/contact</a>. Multiple network/host visits noted using <strong>x(n)</strong>. Listing spans current and previous month.</div>
     </div>
 
     <div class="row">
@@ -10,15 +10,15 @@
     </div>
 
    <div class="row">
-        <div class="column column-no-border"><strong>date/time</strong></div>
-        <div class="column column-no-border">ip&nbsp;&nbsp;&nbsp;&nbsp;<strong>visits</strong>&nbsp;&nbsp;&nbsp;&nbsp;timing(s)</div>
+        <div class="column column-no-border"><strong>date/time</strong>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dot"></span> ban active</div>
+        <div class="column column-no-border">ip&nbsp;&nbsp;&nbsp;&nbsp;<strong>visits</strong>&nbsp;&nbsp;&nbsp;&nbsp;duration</div>
         <div class="column column-no-border">country</div>
     </div>
 
     <div class="row">
         <div class="column column-no-border">name</div>
         <div class="column column-no-border">email</div>
-        <div class="column column-no-border">phantom string</div>
+        <div class="column column-no-border">honeypot</div>
     </div>
 
     <div class="row">
@@ -32,21 +32,63 @@
 </h6>
 </div>
 
+<form id="networkBan" method="POST">
+               
+<% USE date %>
+
 <% FOREACH id IN data.reverse %>
 
 <h6>
 <div class="container">
 
     <div class="row">
-        <div class="column column-no-border"><strong><% id.dateip %></strong></div>
+        <div class="column column-no-border"><strong><% id.dateip %></strong>
+
+        <% IF id.networkban %> 
+            <% IF date.now - id.networkban <= 172800 %>
+                &nbsp;<span class="dot"></span>
+            <% END %>
+        <% ELSE %>
+            <% IF date.now - id.start <= 172800 %>
+                &nbsp;<span class="dot"></span>
+            <% END %>
+        <% END %>
+
+        </div>
+
         <div class="column column-no-border">
+            <% IF id.networkfreq > 1 %>
 
-        <% IF id.networkfreq > 1 %><strong><% id.network %></strong><% id.host %>&nbsp;&nbsp;<% ELSE %><% id.ip %>&nbsp;&nbsp;<% END %>
+                <% IF id.networkban %> 
 
-        <% IF id.networkfreq > 1 %><strong>n<% id.networkfreq %></strong><% END %>&nbsp;&nbsp;
-        <% IF id.hostfreq > 1 %><strong>h<% id.hostfreq %></strong><% END %>&nbsp;&nbsp;
-        <% id.duration %>s</div>
+                    <% IF date.now - id.networkban >= 172800 %>
+                        <button type="submit" name="network" value="<% id.network %>" class="button button-clear2"><% id.network %></button>
+                    <% ELSE %>
+                        <strong><% id.network %></strong>
+                    <% END %>
 
+                <% ELSE %>
+
+                    <button type="submit" name="network" value="<% id.network %>" class="button button-clear2"><% id.network %></button>
+                
+                <% END %>
+
+                <% id.host %>&nbsp;&nbsp;
+
+            <% ELSE %>
+
+                <% id.ip %>&nbsp;&nbsp;
+
+            <% END %>
+
+            <% IF id.networkfreq > 1 %>
+                <strong>n<% id.networkfreq %></strong>
+            <% END %>
+            <% IF id.hostfreq > 1 %>
+                <strong>h<% id.hostfreq %></strong>
+            <% END %>
+            &nbsp;&nbsp;<% id.duration %>s
+        </div>
         <div class="column column-no-border"><% id.geo %></div>
     </div>
 
@@ -64,5 +106,7 @@
 </div>
 
 <% END %>
+
+</form>
 
 <div class="right clear"><img src="images/treelogo40.png" height=34></div>

@@ -4,4 +4,5 @@ use FindBin;
 use lib "$FindBin::Bin/../lib";
 
 use Texcon::App;
-Texcon::App->dance;
+use Texcon::App::Utility;
+Texcon::App->to_app;
