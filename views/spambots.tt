@@ -62,14 +62,14 @@
                 <% IF id.networkban %> 
 
                     <% IF date.now - id.networkban >= 172800 %>
-                        <button type="submit" name="network" value="<% id.network %>" class="button button-clear2"><% id.network %></button>
+                        <button type="submit" name="network" value="<% id.ip %>" class="button button-clear2"><% id.network %></button>
                     <% ELSE %>
                         <strong><% id.network %></strong>
                     <% END %>
 
                 <% ELSE %>
 
-                    <button type="submit" name="network" value="<% id.network %>" class="button button-clear2"><% id.network %></button>
+                    <button type="submit" name="network" value="<% id.ip %>" class="button button-clear2"><% id.network %></button>
                 
                 <% END %>
 

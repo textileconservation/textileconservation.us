@@ -40,7 +40,7 @@ post '/contact' => sub {
 
   if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
     $body ? $body =~ s/[\r\n|\r|\n]+//gms : ($body = '');
-    error "$address; gt:$get_time; pt:$post_time; n:$name; e:$email; bot:$bot; b:$body"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\s[error|warning].*?>\s<HOST>
+    error "$address; gt:$get_time; pt:$post_time; n:$name; e:$email; bot:$bot; b:$body"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\serror.*?>\s<HOST>
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
 

@@ -9,10 +9,9 @@ use Carp;
 
 post '/spambots' => sub {
   my $network = param "network";
-  $network = $network . '.0/24';
   my $time = scalar(time);
-  warning "$network; gt:$time; pt:; n:; e:; bot:; b:"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\s[error|warning].*?>\s<HOST>
-  return template 'error', { title => 'fail2ban handoff', content => "$network ban submitted" };
+  warning "$network; gt:$time; pt:; n:; e:; bot:; b:"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\swarning.*?>\s<HOST>
+  return template 'error', { title => 'fail2ban handoff', content => "$network subnet submitted" };
 };
 
 get '/spambots' => sub {
