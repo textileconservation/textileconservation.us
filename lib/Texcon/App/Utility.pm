@@ -38,6 +38,7 @@ get '/spambots' => sub {
     } else {
       @$line{body} =~ s/^(.*)\sin\s.*$/$1/;
       @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
+      @$line{name} =~ s/^(.{30}).*$/$1 \.\.\./;
       @$line{ip} = @$line{dateip};
       @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
       @$line{network} = @$line{ip};

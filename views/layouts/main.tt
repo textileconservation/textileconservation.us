@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/dist/milligram.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/local.css">
-  </head>
+</head>
     <body>
       <main class="wrapper">
       <nav class="navigation">
