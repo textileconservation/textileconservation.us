@@ -1,12 +1,12 @@
-### textileconservation.us
+#### fail2ban use on textileconservation.us
 
-Essentially a static site consisting of four routes, with fail2ban signaling behind a mail form.
+textileconservation.us is a static site of four routes, but it departs from simplicity with the use of a mail form and its attendant attraction of spam.
 
-Spambot deterrence is accomplished using a hidden get/post timer and honeypot field in the mail form, both conditions being capable of halting submission and logging the ip for fail2ban processing. 
+Spam detection/banning is accomplished using timing and honeypot values in the mail form that trigger a log entry for fail2ban processing. Secondary processing by fail2ban avoids deadlocks that prevent modifying the server firewall directly.
 
-There is also an extra utility route for log display and enabling bans of recurring ip subnets.
+A separate utility route on the site enables bans of recurring ip subnets by making similar entries to the same log.
 
-Uses dancer2's built-in 'file' logging engine. Prompting of fail2ban in the form and utility routes relies on separate jails responding to 'error' and 'warning' log entries for ip bans and subnet bans respectively.
+The site uses dancer2's built-in 'file' logging engine. Triggering of fail2ban in the form and utility routes relies on separate jails responding to 'error' and 'warning' log entries for ip bans and subnet bans respectively.
 
 #### jail.local
 ```
@@ -65,3 +65,4 @@ actionunban = <iptables> -D f2b-<name> -s <ip>/24 -j <blocktype>
 
 [Init]
 ```
+
