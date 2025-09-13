@@ -2,7 +2,7 @@
 
 textileconservation.us is a static site of four routes, but it departs from simplicity with the use of a mail form and its attendant attraction of spam.
 
-Spam detection/banning is accomplished using timing and honeypot values in the mail form that trigger a log entry for fail2ban processing. Secondary processing by fail2ban avoids deadlocks that prevent modifying the server firewall directly.
+Spam detection/banning is accomplished using timing and honeypot values in the mail form that trigger a log entry for fail2ban processing. Ancillary processing by fail2ban avoids deadlocks that complicate modifying the server firewall directly.
 
 A separate utility route on the site enables bans of recurring ip subnets by making similar entries to the same log.
 
