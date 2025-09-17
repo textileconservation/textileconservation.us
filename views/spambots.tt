@@ -9,8 +9,8 @@
         <div class="column column-100 column-no-border">&nbsp;</div>
     </div>
 
-   <div class="row">
-        <div class="column column-no-border"><strong>date/time</strong>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dot"></span> ban active</div>
+    <div class="row">
+        <div class="column column-no-border"><strong>date/time</strong>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dot"></span>&nbsp;bans:&nbsp;n<% bans.first %>&nbsp;h<% bans.last %></div>
         <div class="column column-no-border">ip&nbsp;&nbsp;&nbsp;&nbsp;<strong>visits</strong>&nbsp;&nbsp;&nbsp;&nbsp;duration</div>
         <div class="column column-no-border">country</div>
     </div>

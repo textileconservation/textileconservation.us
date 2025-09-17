@@ -1,4 +1,4 @@
-#### fail2ban-client permissions
+#### fail2ban-client accessibility
 
 /etc/sudoers.d/www-data:
 ```
