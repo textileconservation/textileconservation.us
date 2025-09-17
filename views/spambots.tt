@@ -2,7 +2,7 @@
 <div class="container">
 
    <div class="row">
-        <div class="column column-100 column-no-border">Log of banned spambots posting to <a href="https://textileconservation.us/contact">textileconservation.us/contact</a>. Multiple network/host visits noted using <strong>x(n)</strong>. Listing spans current and previous month.</div>
+        <div class="column column-100 column-no-border">Log of banned spambots posting to <a href="https://textileconservation.us/contact">textileconservation.us/contact</a>. Multiple network/host visits in bold <strong>x(n)</strong>. Listing spans current and previous month.</div>
     </div>
 
     <div class="row">
@@ -10,7 +10,7 @@
     </div>
 
    <div class="row">
-        <div class="column column-no-border"><strong>date/time</strong></div>
+        <div class="column column-no-border"><strong>date/time</strong>&nbsp;&nbsp;&nbsp;&nbsp;<span class="dot"></span> ban active</div>
         <div class="column column-no-border">ip&nbsp;&nbsp;&nbsp;&nbsp;<strong>visits</strong>&nbsp;&nbsp;&nbsp;&nbsp;duration</div>
         <div class="column column-no-border">country</div>
     </div>
@@ -34,8 +34,6 @@
 
 <form id="networkBan" method="POST">
                
-<% USE date %>
-
 <% FOREACH id IN data.reverse %>
 
 <h6>
@@ -44,31 +42,22 @@
     <div class="row">
         <div class="column column-no-border"><strong><% id.dateip %></strong>
 
+        <% IF id.subnetban == 1 || id.ipban == 1 %> 
+                &nbsp;<span class="dot"></span>
+        <% END %>
+
         </div>
 
         <div class="column column-no-border">
             <% IF id.networkfreq > 1 %>
-
-                <% IF id.networkban %> 
-
-                    <% IF date.now - id.networkban >= 172800 %>
-                        <button type="submit" name="network" value="<% id.ip %>" class="button button-clear2"><% id.network %></button>
-                    <% ELSE %>
-                        <strong><% id.network %></strong>
-                    <% END %>
-
+                <% IF id.subnetban %>
+                    <strong><% id.network %></strong>
                 <% ELSE %>
-
                     <button type="submit" name="network" value="<% id.ip %>" class="button button-clear2"><% id.network %></button>
-                
                 <% END %>
-
                 <% id.host %>&nbsp;&nbsp;
-
             <% ELSE %>
-
                 <% id.ip %>&nbsp;&nbsp;
-
             <% END %>
 
             <% IF id.networkfreq > 1 %>

@@ -10,19 +10,29 @@ use Carp;
 post '/spambots' => sub {
   my $network = param "network";
   my $time = scalar(time);
-  warning "$network; gt:$time; pt:; n:; e:; bot:; b:"; #fail2ban handoff. failregex = ^\[Texcon::App:\d+\]\swarning.*?>\s<HOST>
+  `sudo $Texcon::App::base_dir/lib/f2b/bansubnet.pl $network`; #fail2ban handoff
+  warning "$network; gt:$time; pt:; n:; e:; bot:; b:";
   return template 'error', { title => 'fail2ban handoff', content => "$network subnet submitted" };
 };
 
 get '/spambots' => sub {
-  my $botgeo = retrieve("$Texcon::App::base_dir/public/botgeo.txt");
+  foreach ("texcon","texcon-subnet") {
+    `sudo $Texcon::App::base_dir/lib/f2b/banlist.pl $_`;
+  }
+  my $ipbans = retrieve("$Texcon::App::base_dir/public/bans/texcon.txt");
+  my $subnetbans = retrieve("$Texcon::App::base_dir/public/bans/texcon-subnet.txt");
+  my $ip_bans;
+  my $subnet_bans;
+  map { $ip_bans->{$_} = 1 } @$ipbans;
+  map { $subnet_bans->{$_} = 1 } @$subnetbans;
+
+  my $botgeo = retrieve("$Texcon::App::base_dir/public/bans/botgeo.txt");
   my $iana = Net::Whois::IANA->new;
-  my $parser = Text::CSV::Simple->new({ binary => 1, sep_char => ";" });
+  my $parser = Text::CSV::Simple->new({ binary => 1, sep_char => ";", escape_char => "\\", allow_loose_quotes => 1 });
   my @logfields = (qw/dateip start end name email phantom body/);
   $parser->field_map(@logfields);
   my $hostfreq;
   my $networkfreq;
-  my $networkban;
   my $logfile1 = "/var/log/texcon/formbots.log.1";
   my $logfile2 = "/var/log/texcon/formbots.log";
   my @data1 = $parser->read_file($logfile1);
@@ -34,7 +44,6 @@ get '/spambots' => sub {
     if ( @$line{dateip} =~ /^\[Texcon::App:\d+\]\swarning/ ) {
       @$line{network} = @$line{dateip};
       @$line{network} =~ s/.*>\s(\d+\.\d+\.\d+).*/$1/;
-      $networkban->{@$line{network}} = @$line{start};
     } else {
       @$line{body} =~ s/^(.*)\sin\s.*$/$1/;
       @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
@@ -75,10 +84,11 @@ get '/spambots' => sub {
   map { @$_{geo} = $botgeo->{@$_{network}},
           @$_{hostfreq} = $hostfreq->{@$_{ip}},
           @$_{networkfreq} = $networkfreq->{@$_{network}},
-          @$_{networkban} = $networkban->{@$_{network}}
+          @$_{ipban} = $ip_bans->{@$_{ip}},
+          @$_{subnetban} = $subnet_bans->{@$_{network}}
       } @data;
 
-  store ($botgeo, "$Texcon::App::base_dir/public/botgeo.txt");
+  store ($botgeo, "$Texcon::App::base_dir/public/bans/botgeo.txt");
 
   template 'spambots', { data => \@data };
 
