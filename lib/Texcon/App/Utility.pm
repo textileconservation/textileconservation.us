@@ -90,8 +90,8 @@ get '/spambots' => sub {
 
   store ($botgeo, "$Texcon::App::base_dir/public/bans/botgeo.txt");
 
-  my $first = keys $subnet_bans;
-  my $last = keys $ip_bans;
+  my $first = keys %{ $subnet_bans };
+  my $last = keys %{ $ip_bans };
   my @bans = ($first, $last);
 
   template 'spambots', { data => \@data, bans => \@bans };
