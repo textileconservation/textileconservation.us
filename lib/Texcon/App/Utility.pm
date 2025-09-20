@@ -41,25 +41,20 @@ get '/spambots' => sub {
 
   foreach my $line (@data) {
     map { @$line{$_} =~ s/^\s\w+:// } @logfields;
-    if ( @$line{dateip} =~ /^\[Texcon::App:\d+\]\swarning/ ) {
-      @$line{network} = @$line{dateip};
-      @$line{network} =~ s/.*>\s(\d+\.\d+\.\d+).*/$1/;
-    } else {
-      @$line{body} =~ s/^(.*)\sin\s.*$/$1/;
-      @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
-      @$line{name} =~ s/^(.{30}).*$/$1 \.\.\./;
-      @$line{ip} = @$line{dateip};
-      @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
-      @$line{network} = @$line{ip};
-      @$line{network} =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
-      @$line{host} = @$line{ip};
-      @$line{host} =~ s/^\d+\.\d+\.\d+(\.\d+)$/$1/;
-      @$line{dateip} =~ s/^.*@(.*)>.*$/$1/;
-      @$line{duration} = @$line{end} - @$line{start};
-      $networkfreq->{@$line{network}}++;
-      $hostfreq->{@$line{ip}}++;
-      $botgeo->{@$line{network}} = undef unless $botgeo->{@$line{network}};
-    }
+    @$line{body} =~ s/^(.*)\sin\s.*$/$1/;
+    @$line{body} =~ s/^(.{30}).*$/$1 \.\.\./;
+    @$line{name} =~ s/^(.{30}).*$/$1 \.\.\./;
+    @$line{ip} = @$line{dateip};
+    @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
+    @$line{network} = @$line{ip};
+    @$line{network} =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
+    @$line{host} = @$line{ip};
+    @$line{host} =~ s/^\d+\.\d+\.\d+(\.\d+)$/$1/;
+    @$line{dateip} =~ s/^.*@(.*)>.*$/$1/;
+    @$line{duration} = @$line{end} - @$line{start} if @$line{end};
+    $networkfreq->{@$line{network}}++;
+    $hostfreq->{@$line{ip}}++;
+    $botgeo->{@$line{network}} = undef unless $botgeo->{@$line{network}};
   }
 
   my $indexcx = 0;
@@ -90,9 +85,9 @@ get '/spambots' => sub {
 
   store ($botgeo, "$Texcon::App::base_dir/public/bans/botgeo.txt");
 
-  my $first = keys %{ $subnet_bans };
-  my $last = keys %{ $ip_bans };
-  my @bans = ($first, $last);
+  my $subban_total = keys %{ $subnet_bans };
+  my $ipban_total = keys %{ $ip_bans };
+  my @bans = ($subban_total, $ipban_total);
 
   template 'spambots', { data => \@data, bans => \@bans };
 
