@@ -66,7 +66,9 @@
             <% IF id.hostfreq > 1 %>
                 <strong>h<% id.hostfreq %></strong>
             <% END %>
-            &nbsp;&nbsp;<% id.duration %>s
+            <% IF id.duration > 1 %>
+                &nbsp;&nbsp;<% id.duration %>s
+            <% END %>
         </div>
         <div class="column column-no-border"><% id.geo %></div>
     </div>
