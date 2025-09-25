@@ -11,7 +11,6 @@ post '/spambots' => sub {
   my $network = param "network";
   my $time = scalar(time);
   `sudo $Texcon::App::base_dir/lib/f2b/bansubnet.pl $network`; #fail2ban handoff
-  warning "$network; gt:$time; pt:; n:; e:; bot:; b:";
   return template 'error', { title => 'fail2ban handoff', content => "$network subnet submitted" };
 };
 
@@ -55,13 +54,6 @@ get '/spambots' => sub {
     $networkfreq->{@$line{network}}++;
     $hostfreq->{@$line{ip}}++;
     $botgeo->{@$line{network}} = undef unless $botgeo->{@$line{network}};
-  }
-
-  my $indexcx = 0;
-  my @netban_indexes = grep { $data[$_]{dateip} =~ /warning/ } 0..$#data;
-  foreach (@netban_indexes) {
-    splice(@data, $_ - $indexcx, 1);
-    $indexcx++;
   }
    
   foreach my $network (keys %$botgeo) {
