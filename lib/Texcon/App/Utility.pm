@@ -45,9 +45,8 @@ get '/spambots' => sub {
     @$line{name} =~ s/^(.{20}).*$/$1 \.\.\./;
     @$line{ip} = @$line{dateip};
     @$line{ip} =~ s/.*>\s(\d+\.\d+\.\d+\.\d+)$/$1/;
-    @$line{network} = @$line{ip};
+    @$line{network} = @$line{host} = @$line{ip};
     @$line{network} =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
-    @$line{host} = @$line{ip};
     @$line{host} =~ s/^\d+\.\d+\.\d+(\.\d+)$/$1/;
     @$line{dateip} =~ s/^.*@(.*)>.*$/$1/;
     @$line{duration} = @$line{end} - @$line{start} if @$line{end};
