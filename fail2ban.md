@@ -1,4 +1,4 @@
-#### fail2ban use on textileconservation.us
+#### fail2ban use
 
 textileconservation.us is a static site of four routes. One of the routes has a mail form that attracts spam.
 
