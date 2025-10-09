@@ -35,8 +35,13 @@ get '/spambots' => sub {
   my $logfile1 = "/var/log/texcon/formbots.log.1";
   my $logfile2 = "/var/log/texcon/formbots.log";
   my @data1 = $parser->read_file($logfile1);
-  my @data2 = $parser->read_file($logfile2);
-  my @data = (@data1,@data2);
+  my @data2;
+  try {
+        @data2 = $parser->read_file($logfile2);
+      } catch {
+        carp "caught error: $_"; # not $@
+  };
+  my @data = @data2 ? (@data1,@data2) : @data1;
 
   foreach my $line (@data) {
     map { @$line{$_} =~ s/^\s\w+:// } @logfields;
