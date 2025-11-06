@@ -39,7 +39,10 @@ post '/contact' => sub {
   my $rapid = 1 if $post_time - $get_time < 20;
 
   if (my $bot = $pw ? $pw : undef ||  $rapid ? $rapid : undef) {
-    $body ? $body =~ s/[\r\n|\r|\n]+//gms : ($body = '');
+    $body ? $body =~ s/[\r\n|\r|\n]+//gms : ($body = ''); # s/\r?\n$//;
+    $name ? $name =~ s/[\r\n|\r|\n]+//gms : ($name = '');
+    $email ? $email =~ s/[\r\n|\r|\n]+//gms : ($email = '');
+    $bot =~ s/[\r\n|\r|\n]+//gms;
     `sudo $base_dir/lib/f2b/bansubnet.pl $address`;  #fail2ban handoff
     error "$address; gt:$get_time; pt:$post_time; n:$name; e:$email; bot:$bot; b:$body";
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
