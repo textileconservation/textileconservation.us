@@ -5,6 +5,7 @@ use Email::Valid;
 use Try::Tiny;
 use File::Slurp;
 use Template;
+use Storable;
 
 our $VERSION = '0.1';
 
@@ -47,16 +48,11 @@ post '/contact' => sub {
     my $subnet = $address;
     $subnet =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
     my $ipbans = retrieve("$base_dir/public/bans/texcon.txt");
-    foreach my $ipban (@$ipbans) {
-      $ipban =~ s/^(\d+\.\d+\.\d+)\.\d+$/$1/;
-    }
-
-    if ( grep( /^$subnet$/, @$ipbans ) ) {  #fail2ban handoff
+    if ( grep( /^$subnet/, @$ipbans ) ) {  #fail2ban handoff
       `sudo $base_dir/lib/f2b/bansubnet.pl $address`;
     } else {
       `sudo $base_dir/lib/f2b/banip.pl $address`;
     }
-
     error "$address; gt:$get_time; pt:$post_time; n:$name; e:$email; bot:$bot; b:$body";
     return template 'error', { title => 'thank you', content => 'inquiry processed' };
   }
