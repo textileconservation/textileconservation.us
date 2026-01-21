@@ -21,6 +21,7 @@ my $max_upload = 20971520;
 
 hook before  => sub {
   var get_time => scalar(time);
+  var host => request->host;
 };
 
 get '/' => sub {

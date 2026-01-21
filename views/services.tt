@@ -32,7 +32,7 @@
 <li>Linings to protect the back of the textile from damage and dirt
 </ul>
 
-<a class="mail link" href="mailto:sg@textileconservation.us"><p align=right>sg@textileconservation.us</a>
+<a class="mail link" href="mailto:sg@<% vars.host %>"><p align=right>sg@<% vars.host %></a>
 
 </div>
 </div>
