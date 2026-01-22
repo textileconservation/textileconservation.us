@@ -2,7 +2,7 @@
 <div class="container">
 
    <div class="row">
-        <div class="column column-100 column-no-border">Log of banned spambots posting to <a href="https://textileconservation.us/contact">textileconservation.us/contact</a>. Multiple network/host visits in bold <strong>x(n)</strong>. Listing spans current and previous month.</div>
+        <div class="column column-100 column-no-border">Log of banned spambots posting to <a href="https://<% vars.host %>/contact"><% vars.host %>/contact</a>. Multiple network/host visits in bold <strong>x(n)</strong>. Listing spans current and previous month.</div>
     </div>
 
     <div class="row">
