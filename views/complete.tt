@@ -4,7 +4,7 @@
 <p><h5 class="title">thank you</h5>
 <p>I will review your inquiry and reply as soon as possible.</p>
 
-<a class="mail link" href="mailto:sg@textileconservation.us"><p align=right>sg@textileconservation.us</a>
+<a class="mail link" href="mailto:sg@<% vars.host %>"><p align=right>sg@<% vars.host %></a>
 
 </div>
 </div>

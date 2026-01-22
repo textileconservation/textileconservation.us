@@ -12,7 +12,7 @@ our $VERSION = '0.1';
 our $base_dir = '/var/www/textileconservation.us';
 
 my $upload_dir = "$base_dir/public/files";
-my $server = 'sg@textileconservation.us';
+my $server = 'sg@';
 my $disposables = "$base_dir/public/disposable_email_blocklist.conf";
 my $mail_template = Template->new({ INCLUDE_PATH => "$base_dir/views", INTERPOLATE  => 1, }) || die Template->error(),"\n";
 
@@ -29,6 +29,8 @@ get '/' => sub {
 };
 
 post '/contact' => sub {
+  my $host = request->host;
+  $server .= $host;
   my $post_time = scalar(time);
   my $get_time = param "get_time";
   my $pw = param "pw";
@@ -109,9 +111,11 @@ post '/contact' => sub {
   my $mail_vars = {
 	      rel_uri => uri_for($rel_upload_dir),
 	      date => $date,
+        name => $name,
 	      email => $email,
 	      body => $body,
 	      server => $server,
+        host => $host,
 	      filelist => \@filenames,
 	      filenames => \%filenames,
   };
@@ -139,7 +143,7 @@ post '/contact' => sub {
 
   try {
     email {
-      from    => "$server",
+      from    => "shelley greenspan <$server>",
       to      => "$name <$email>",
       subject => 'inquiry acknowledgement',
       body    => "$mail_ack",
