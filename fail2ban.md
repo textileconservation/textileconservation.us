@@ -1,8 +1,8 @@
 #### fail2ban use
 
-textileconservation.us is a static site of four routes. One of the routes has a mail form that attracts spam.
+sg textile conservation is a static site of four routes. One of the routes has a mail form that attracts spam.
 
-Spam detection/banning is accomplished using timing and honeypot values in the mail form that trigger fail2ban processing. Ancillary use of fail2ban simplifies the management of ban durations.
+Spam detection/banning is accomplished using timing and trap values in the mail form that trigger fail2ban processing. Ancillary use of fail2ban simplifies the management of ban durations.
 
 A separate utility route displays the ban log and enables bans of recurring ip subnets.
 

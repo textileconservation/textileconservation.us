@@ -18,7 +18,7 @@
     <div class="row">
         <div class="column column-no-border">name</div>
         <div class="column column-no-border">email</div>
-        <div class="column column-no-border">honeypot</div>
+        <div class="column column-no-border">trap</div>
     </div>
 
     <div class="row">
